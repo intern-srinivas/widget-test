@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plivo CX Widget Test</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      background-color: azure;
+      font-style: oblique;
+      font-weight: bold;
+    }
+  </style>
+
+  <script>
+    // ✅ Define chat config first
+    window.__C_CHAT_CONFIG = {
+      appInfo: {
+        appId: 'f978b93c-c716-4750-9f48-f48c35883d37',
+        appKey: '04fba097576e840b4f6719cc0af675d5fb8992e0a027b04de719a36c8abe76b2',
+        region: 'us-east-1',
+        device: 'web'
+      },
+    };
+  </script>
+
+  <script>
+    (function (d, s, o, f, js, fjs) {
+      const origin = 'https://agent-chat.plivo.com';
+      js = d.createElement(s);
+      fjs = d.getElementsByTagName(s)[0];
+      js.id = o;
+      js.src = origin + f;
+      js.async = 1;
+      fjs.parentNode.insertBefore(js, fjs);
+      js.onload = () => {
+        if (typeof _moduleAC !== 'undefined') {
+          _moduleAC.init(origin);
+        } else {
+          console.error('Plivo CX module not loaded.');
+        }
+      };
+    })(document, 'script', '_ac', '/assets/js/widget.js');
+  </script>
+</head>
+
+<body>
+  Hi there — have a look at Plivo CX widget test!
+</body>
+</html>
