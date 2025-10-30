@@ -4,20 +4,83 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Plivo CX Widget Test</title>
-
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
-      background-color: azure;
-      font-style: oblique;
-      font-weight: bold;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      color: #00695c;
+      font-size: 2rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    p {
+      color: #546e7a;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+
+    .status.loading {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    .status.error {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .info-box {
+      background: #f5f5f5;
+      border-left: 4px solid #00897b;
+      padding: 16px;
+      margin-top: 24px;
+      text-align: left;
+      border-radius: 4px;
+    }
+
+    .info-box strong {
+      color: #00695c;
     }
   </style>
 
-  <!-- ✅ Define the widget config BEFORE loading the script -->
+  <!-- Plivo CX Widget Configuration -->
   <script>
     window.__C_CHAT_CONFIG = {
       appInfo: {
@@ -29,7 +92,7 @@
     };
   </script>
 
-  <!-- ✅ Then load and initialize the widget -->
+  <!-- Plivo CX Widget Loader -->
   <script>
     (function (d, s, o, f, js, fjs) {
       const origin = 'https://agent-chat.plivo.com';
@@ -39,18 +102,51 @@
       js.src = origin + f;
       js.async = 1;
       fjs.parentNode.insertBefore(js, fjs);
+      
+      // Update status on load
       js.onload = () => {
+        const statusEl = document.getElementById('widget-status');
         if (typeof _moduleAC !== 'undefined') {
           _moduleAC.init(origin);
+          if (statusEl) {
+            statusEl.textContent = '✓ Widget Loaded Successfully';
+            statusEl.className = 'status';
+          }
+          console.log('✅ Plivo CX widget initialized successfully');
         } else {
+          if (statusEl) {
+            statusEl.textContent = '✗ Widget Failed to Load';
+            statusEl.className = 'status error';
+          }
           console.error('❌ Plivo CX module not loaded');
         }
+      };
+
+      js.onerror = () => {
+        const statusEl = document.getElementById('widget-status');
+        if (statusEl) {
+          statusEl.textContent = '✗ Script Loading Error';
+          statusEl.className = 'status error';
+        }
+        console.error('❌ Failed to load Plivo CX widget script');
       };
     })(document, 'script', '_ac', '/assets/js/widget.js');
   </script>
 </head>
-
 <body>
-  Hi there — have a look at Plivo CX widget test!
+  <div class="container">
+    <h1>Welcome to Plivo CX Chat</h1>
+    <p>
+      This page demonstrates the Plivo CX widget integration. 
+      Look for the chat widget in the bottom-right corner of your screen.
+    </p>
+    <div id="widget-status" class="status loading">⏳ Loading Widget...</div>
+    
+    <div class="info-box">
+      <strong>How it works:</strong><br>
+      The Plivo CX chat widget should appear as a floating button on your page. 
+      Click it to start a conversation with support agents.
+    </div>
+  </div>
 </body>
 </html>
